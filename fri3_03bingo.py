@@ -8,7 +8,7 @@
 #選択した値はすべて記憶して，履歴表示させる
 
 import tkinter as tk
-from tkinter import messagebox
+from tkinter import messagebox as tkmsg
 import random
 
 #list
@@ -16,25 +16,26 @@ selected_num = []
 unselected_num = [n for n in range(1,76)]
 
 #乱数で数値を出力する関数
-def bingo():
-    ball_num = -1
+def bingo(shoki):
+    ball_num = shoki
+    print(ball_num)
     ball_num = random.choice(unselected_num)
-    if ball_num >= 1 & 75 >= ball_num:
+    print(ball_num)
+    if 75 >= ball_num >= 1:
         selected_num.append(ball_num)
-        unselected_num.remove(ball_num)
-        #print(ball_num)
-        #messagebox.showinfo(message=ball_num)
+        unselected_num.remove(ball_num) 
+        #tkmsg.showinfo("出力する値",f"{ball_num}")
+        print(selected_num)
+        bingo_label.config(text=f"乱数リスト: {selected_num}")
     
 #ウィンドウ
 root = tk.Tk()
 root.minsize(400,400)
 
-bingo_btn = tk.Button(root,text="押すと抽選",command=lambda:bingo)
+bingo_btn = tk.Button(root,text="押すと抽選",command=lambda:bingo(-1))
+bingo_label = tk.Label(root,text = "[]")
 bingo_btn.pack()
-
-#label = tk.Label(text=f'{selected_number}' for selected_number in selected_num )
-
-bingo_btn.bind("<Button-1>",bingo())
+bingo_label.pack()
 
 #ウィンドウの設定はmainloopの前に書く？
 root.mainloop()
